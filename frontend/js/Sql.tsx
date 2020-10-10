@@ -8,6 +8,8 @@ function Sql() {
 
     const [form,setForm]=useState<Boolean>(true)
 
+    const [database,setDatabase]=useState<string>("")
+
     const [request, setrequest] = useState("")
     const [result, setresult] = useState<string>(null)
 
@@ -32,6 +34,8 @@ function Sql() {
             database:document.getElementById("database").value
         }
 
+        setDatabase(session.database)
+
         socket.emit("start",session)
         setForm(false)
     }
@@ -47,10 +51,14 @@ function Sql() {
         </form>:null}
 
         {(!form)?<div>
-            <div className="line"><button onClick={()=>{setForm(true)}}>deconnexion</button></div>
+            <div className="line" style={{justifyContent:"space-between"}}><h1>Request</h1><button onClick={()=>{setForm(true)}}>deconnexion</button></div>
 
             <div className="Formulaire">
-                <Form submit={submit} request={request} setrequest={setrequest} />
+                <div>
+                    <h1>{database}</h1>
+                    <Form submit={submit} request={request} setrequest={setrequest} />
+                </div>
+                
                 <Buttons setrequest={setrequest}/>
             </div>
 
@@ -74,11 +82,33 @@ const Form =({submit,request,setrequest}) => {
 }
 
 const Buttons = ({setrequest}) => {
-    return <div className="buttons">
-        <button>a</button>
-        <button>a</button>
-        <button>a</button>
-    </div>
-}
 
-render(<Sql/>,document.getElementById("app"))
+    const [columns, setColumns] = useState<string>("*")
+    const [tables, Settables] = useState<string>("")
+
+
+    const getTables = ()=>{
+        setrequest("show tables")
+    }
+
+    const select = ()=>{
+        setrequest(`select ${columns} from ${tables}`)
+    }
+
+    return <div className="buttons">
+        <h1>Default Request</h1>
+        <div style={{overflowY:"scroll"}}>
+            <div className="line"><button onClick={getTables}>get tables</button></div>
+            <div className="line">
+                <label>select</label>
+                <input value={columns} onChange={e=>setColumns(e.target.value)} />
+                <label>from</label><input onChange={e=>Settables(e.target.value)} />
+                <br/><button onClick={select}>show</button>
+            </div>
+            <div className="line"><label>select</label><input value={tables} onChange={e=>Settables(e.target.value)}/><button>show</button></div>
+            </div>
+            
+        </div>
+    }
+
+    render(<Sql/>,document.getElementById("app"))
