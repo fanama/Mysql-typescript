@@ -14,7 +14,7 @@ export class Data {
 
         this.pool.getConnection(err=>{
             if(err){console.log(err)}else{
-                console.log("success")
+                console.log(`new connection on ${host}`)
             }
         })
     }

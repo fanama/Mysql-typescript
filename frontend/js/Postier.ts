@@ -1,20 +1,21 @@
 import axios from 'axios'
+import socketIOClient from 'socket.io-client';
+
 import 'regenerator-runtime/runtime'
 
+
 class Postier{
-    async sendRequest(request:string,id:Number,setResult:React.Dispatch<string>){
+    
+    async getResult(setResult:React.Dispatch<string>){
 
-        const post:string="/sql/request/"+id
-
-        console.log("posting..."+post)
-
-
-        const res = await axios.post(post,{request})
-
-        setResult(JSON.stringify(res.data[0]))
+        socket.on("response",(data)=>{
+            setResult(JSON.stringify(data))
+        })
 
 
     }
+
 }
 
+export const socket= socketIOClient()
 export const postier = new Postier()
