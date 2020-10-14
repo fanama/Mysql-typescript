@@ -73,7 +73,9 @@ const Buttons = ({}) => {
     }
 
     const select = ()=>{
-        setrequest(`select ${columns} from ${tables}`)
+        const request = `select ${columns} from ${tables}`
+        setrequest(request)
+        submit(request)
     }
 
     return <div className="buttons">
