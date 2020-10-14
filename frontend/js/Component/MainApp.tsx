@@ -81,14 +81,18 @@ const Buttons = ({}) => {
     return <div className="buttons">
         <h1>Default Request</h1>
         <div style={{overflowY:"scroll"}}>
+
             <div className="line"><button onClick={getTables}>get tables</button></div>
+            
             <div className="line">
                 <label>select</label>
                 <input value={columns} onChange={e=>setColumns(e.target.value)} />
                 <label>from</label><input onChange={e=>Settables(e.target.value)} />
                 <br/><button onClick={select}>show</button>
             </div>
+
             <div className="line"><label>select</label><input value={tables} onChange={e=>Settables(e.target.value)}/><button>show</button></div>
+            
             </div>
             
         </div>
