@@ -9,6 +9,9 @@ class Postier{
     async getResult(setResult:React.Dispatch<string>){
 
         socket.on("response",(data)=>{
+
+            console.log(data)
+
             setResult(JSON.stringify(data))
         })
 
